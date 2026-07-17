@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RuoYi AI - 基于 Spring Boot 与 AI 的企业级智能开发平台">
+  <title>RuoYi AI - 企业级智能开发平台</title>
+  <style>
+    /* ========== Reset ========== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #1a1a2e; background: #f8f9fc; line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ========== Header ========== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 16px 0;
+    }
+    .header .container {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 22px; font-weight: 700; color: #1a1a2e;
+    }
+    .logo-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; font-size: 18px; font-weight: 700;
+    }
+    .nav { display: flex; align-items: center; gap: 28px; }
+    .nav a {
+      font-size: 15px; font-weight: 500; color: #4b5563;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: #6366f1; }
+    .nav .btn-primary {
+      padding: 8px 20px; border-radius: 8px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff !important; font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+    }
+
+    /* ========== Hero ========== */
+    .hero {
+      padding: 140px 0 80px;
+      background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 50%, #fdf2f8 100%);
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 52px; font-weight: 800; line-height: 1.2;
+      background: linear-gradient(135deg, #1a1a2e, #6366f1);
+      background-clip: text; -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 20px; color: #6b7280; max-width: 640px;
+      margin: 0 auto 36px;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .hero-btns .btn {
+      padding: 12px 32px; border-radius: 10px; font-size: 16px; font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+    }
+    .hero-btns .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border: none;
+      box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+    }
+    .hero-btns .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+    }
+    .hero-btns .btn-outline {
+      background: transparent; color: #6366f1;
+      border: 2px solid #6366f1;
+    }
+    .hero-btns .btn-outline:hover {
+      background: #6366f1; color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ========== Features ========== */
+    .section { padding: 80px 0; }
+    .section-title {
+      text-align: center; font-size: 32px; font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      text-align: center; font-size: 16px; color: #9ca3af;
+      margin-bottom: 48px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: #fff; border-radius: 16px; padding: 32px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+    .feature-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 14px;
+      font-size: 24px; margin-bottom: 18px;
+    }
+    .feature-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: #6b7280; }
+
+    /* ========== Tech Stack ========== */
+    .tech-section { background: #fff; }
+    .tech-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 40px 56px;
+    }
+    .tech-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .tech-item .icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; color: #fff;
+    }
+    .tech-item span { font-size: 14px; color: #6b7280; font-weight: 500; }
+
+    /* ========== CTA ========== */
+    .cta {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; text-align: center; padding: 80px 0;
+    }
+    .cta h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+    .cta p { font-size: 18px; opacity: 0.85; margin-bottom: 36px; }
+    .cta .btn {
+      display: inline-block; padding: 14px 40px; border-radius: 10px;
+      background: #fff; color: #6366f1; font-size: 18px; font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+    /* ========== Footer ========== */
+    .footer {
+      background: #1a1a2e; color: #9ca3af; padding: 40px 0; text-align: center;
+      font-size: 14px;
+    }
+    .footer a { color: #c7d2fe; }
+    .footer a:hover { color: #fff; }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .nav { display: none; }
+      .section-title { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== Header ==================== -->
+<header class="header">
+  <div class="container">
+    <a href="#" class="logo">
+      <span class="logo-icon">AI</span>
+      RuoYi AI
+    </a>
+    <nav class="nav">
+      <a href="#features">功能特性</a>
+      <a href="#tech">技术栈</a>
+      <a href="https://github.com/yangzongzhuan/RuoYi" target="_blank">GitHub</a>
+      <a href="#" class="btn-primary">开始使用</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== Hero ==================== -->
+<section class="hero">
+  <div class="container">
+    <h1>RuoYi AI<br>企业级智能开发平台</h1>
+    <p>
+      基于 Spring Boot + AI 的智能开发框架，融合若依生态与前沿 AI 能力，
+      助你快速构建企业级应用。
+    </p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-primary">快速开始</a>
+      <a href="#features" class="btn btn-outline">了解更多</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Features ==================== -->
+<section class="section" id="features">
+  <div class="container">
+    <h2 class="section-title">核心功能</h2>
+    <p class="section-subtitle">开箱即用，让开发更高效</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#eef2ff;color:#6366f1;">🧠</div>
+        <h3>AI 智能助手</h3>
+        <p>集成大语言模型，支持智能代码生成、需求分析、自动补全，提升开发效率。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fef2f2;color:#ef4444;">⚡</div>
+        <h3>代码生成器</h3>
+        <p>基于模板引擎的动态代码生成，一键生成 Controller、Service、Mapper 全套代码。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#f0fdf4;color:#22c55e;">🔐</div>
+        <h3>权限管理</h3>
+        <p>RBAC 权限模型，支持菜单/按钮/数据权限粒度控制，安全可靠。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fefce8;color:#eab308;">📊</div>
+        <h3>数据管理</h3>
+        <p>动态数据源、多租户、数据权限隔离，满足企业级复杂数据管理需求。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#f5f3ff;color:#a855f7;">🔌</div>
+        <h3>插件生态</h3>
+        <p>丰富的插件市场，工作流、定时任务、消息推送等即插即用。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fff7ed;color:#f97316;">📝</div>
+        <h3>在线文档</h3>
+        <p>集成 Swagger + Knife4j，API 文档自动生成，前后端协作无忧。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Tech Stack ==================== -->
+<section class="section tech-section" id="tech">
+  <div class="container">
+    <h2 class="section-title">技术栈</h2>
+    <p class="section-subtitle">现代化技术体系，稳定高效</p>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="icon" style="background:#6db33f;">🌱</div>
+        <span>Spring Boot</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#4a5568;">🍃</div>
+        <span>Spring Security</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#4479a1;">🗄️</div>
+        <span>MyBatis</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#339933;">🟢</div>
+        <span>Node.js</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#41b883;">🟩</div>
+        <span>Vue 3</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#f7df1e;color:#1a1a2e;">🟨</div>
+        <span>JavaScript</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#3178c6;">🔷</div>
+        <span>TypeScript</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#dc382d;">🔴</div>
+        <span>Redis</span>
+      </div>
+      <div class="tech-item">
+        <div class="icon" style="background:#00758f;">🐬</div>
+        <span>MySQL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="cta">
+  <div class="container">
+    <h2>准备好开启智能开发了吗？</h2>
+    <p>加入 RuoYi AI 社区，与数千开发者一起构建未来。</p>
+    <a href="https://github.com/yangzongzhuan/RuoYi" target="_blank" class="btn">
+      前往 GitHub ⭐
+    </a>
+  </div>
+</section>
+
+<!-- ==================== Footer ==================== -->
+<footer class="footer">
+  <div class="container">
+    <p>
+      © 2025 <a href="#">RuoYi AI</a> - 基于
+      <a href="https://gitee.com/ruoyi" target="_blank">若依框架</a>
+      打造的智能开发平台
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

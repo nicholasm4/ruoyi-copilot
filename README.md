@@ -1,6 +1,6 @@
 # ruoyi-copilot
 
-基于 Vue 3 + Vite 的 Copilot 前端 UI，对接 Spring AI Alibaba 后端（会话、模型、工作区、流式对话）。
+基于 Vue 3 + Vite 的 Copilot 前端 UI，对接 RUOYI-AI后端（会话、模型、工作区、流式对话）。
 
 ## 技术栈
 
