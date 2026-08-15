@@ -1,4 +1,4 @@
-# ruoyi-copilot
+# RuoYi Copilot v0.0.1
 
 基于 Vue 3 + Vite 的 Copilot 前端 UI，对接 RUOYI-AI后端（会话、模型、工作区、流式对话）。
 
@@ -12,12 +12,12 @@
 
 ```bash
 npm install
-npm run dev      # http://localhost:5174
+npm run dev      # http://127.0.0.1:5174
 npm run build    # 生产构建
 npm run preview  # 预览构建产物
 ```
 
-后端代理默认指向 `http://localhost:6039`，见 `vite.config.js`。
+后端代理默认指向 `http://localhost:6039`，见 `vite.config.ts`。
 
 ## License
 
